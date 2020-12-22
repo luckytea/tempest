@@ -5,7 +5,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/luckytea/tempest/cfg"
@@ -42,7 +45,13 @@ func main() {
 
 	fmt.Println("inc")
 
-	metric.WithLabelValues("service", "code", "handler").Inc()
+	go func() {
+		for {
+			metric.WithLabelValues("service", "code", "handler").Inc()
+
+			time.Sleep(1 * time.Second)
+		}
+	}()
 
 	time.Sleep(50 * time.Millisecond)
 
@@ -63,6 +72,11 @@ func main() {
 	}
 	bodyString := string(bodyBytes)
 	fmt.Println("body:", bodyString)
+
+	ossig := make(chan os.Signal, 1)
+ 
+	signal.Notify(ossig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	<-ossig
 }
 
 // TODO:
