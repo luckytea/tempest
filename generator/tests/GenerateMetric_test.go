@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/luckytea/tempest/generator"
-	"github.com/luckytea/tempest/model"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -13,7 +12,7 @@ func TestGenerateMetricsShouldFailWithUnsupportedMetricType(t *testing.T) {
 	// arrange
 	var (
 		expectedError error = generator.ErrUnsupportedMetricType
-		ts                  = model.Timeseries{
+		ts                  = generator.Timeseries{
 			Name:       "http_total_ups_and_down",
 			Labels:     nil,
 			MetricType: "gauge",

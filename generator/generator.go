@@ -1,11 +1,10 @@
 package generator
 
 import (
-	"github.com/luckytea/tempest/model"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-func GenerateMetric(metric model.Timeseries) (interface{}, error) {
+func GenerateMetric(metric Timeseries) (interface{}, error) {
 	switch metric.MetricType {
 	case CounterType:
 		return prometheus.CounterVec{}, nil
