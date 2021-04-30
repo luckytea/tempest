@@ -2,18 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
 	"os"
-	"os/signal"
 	"sync"
-	"syscall"
-	"time"
 
 	"github.com/luckytea/tempest/cfg"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // TODO:
@@ -41,6 +35,8 @@ func main() {
 
 	metric := generateCounterMetric(&config.Ts)
 
+	fmt.Println(metric)
+
 	arr := generateMatrix(config.Ts.Labels)
 
 	for i := range arr {
@@ -49,34 +45,6 @@ func main() {
 
 	os.Exit(0)
 
-	http.Handle("/metrics", promhttp.Handler())
-	go func() {
-		log.Fatal(http.ListenAndServe("localhost"+config.Port, nil))
-	}()
-
-	go func() {
-		for {
-			var wg sync.WaitGroup
-
-			for i := range config.Ts.Labels {
-				wg.Add(1)
-
-				go mutate(&wg, metric, config.Ts.Labels[i], i)
-			}
-
-			wg.Wait()
-
-			time.Sleep(1 * time.Second)
-		}
-	}()
-
-	// waiting for listener
-	time.Sleep(50 * time.Millisecond)
-
-	ossig := make(chan os.Signal, 1)
-
-	signal.Notify(ossig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-	<-ossig
 }
 
 func extractNames(l []cfg.Label) []string {
@@ -90,6 +58,8 @@ func extractNames(l []cfg.Label) []string {
 }
 
 func generateCounterMetric(t *cfg.Timeseries) *prometheus.CounterVec {
+	// generate openmetric-formatted metric from cli
+
 	labels := extractNames(t.Labels)
 
 	var metric = prometheus.NewCounterVec(

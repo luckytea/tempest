@@ -14,12 +14,6 @@ func Init(v string) *Config {
 	)
 
 	flag.StringVar(
-		&cfg.Port,
-		"port", ":10500",
-		"Service port.",
-	)
-
-	flag.StringVar(
 		&cfg.Ts.LabelsLine,
 		"labels", "label,label2,label3",
 		"Metric labels.",
@@ -30,8 +24,9 @@ func Init(v string) *Config {
 	// }
 
 	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "status", Values: []string{"200", "404", "502"}})
-	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "method", Values: []string{"GET", "POST", "DELETE"}})
-	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "handler", Values: []string{"order", "product"}})
+
+	// cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "method", Values: []string{"GET", "POST", "DELETE"}})
+	// cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "handler", Values: []string{"order", "product"}})
 
 	flag.StringVar(
 		&cfg.Ts.MetricType,
