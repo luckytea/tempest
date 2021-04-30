@@ -2,7 +2,6 @@ package cfg
 
 import (
 	"flag"
-	"strings"
 )
 
 func Init(v string) *Config {
@@ -22,13 +21,17 @@ func Init(v string) *Config {
 
 	flag.StringVar(
 		&cfg.Ts.LabelsLine,
-		"labels", "label,label1",
+		"labels", "label,label2,label3",
 		"Metric labels.",
 	)
 
-	for _, label := range strings.Split(cfg.Ts.LabelsLine, ",") {
-		cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: label, Values: []string{"pupa", "lupa", "zalupa"}})
-	}
+	// for _, label := range strings.Split(cfg.Ts.LabelsLine, ",") {
+	// 	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: label, Values: []string{"pupa", "lupa", "zalupa"}})
+	// }
+
+	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "status", Values: []string{"200", "404", "502"}})
+	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "method", Values: []string{"GET", "POST", "DELETE"}})
+	cfg.Ts.Labels = append(cfg.Ts.Labels, Label{Name: "handler", Values: []string{"order", "product"}})
 
 	flag.StringVar(
 		&cfg.Ts.MetricType,

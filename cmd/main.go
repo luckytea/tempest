@@ -25,10 +25,6 @@ import (
 // remove hardcoded values
 // 3. no values, generate seed for timeseries and increment with some algorithm
 
-// go get github.com/prometheus/client_golang/prometheus
-// go get github.com/prometheus/client_golang/prometheus/promauto
-// go get github.com/prometheus/client_golang/prometheus/promhttp
-
 var version = "dev"
 
 func main() {
@@ -43,16 +39,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	// http_requests_total{code,handler,service,method}
-	// for every method for every handler for every code for every service
-	// WithLabelValues{(1,2,3,4)}.inc()
-
-	//
-
-	// for every key:
-	// dict[key] = value
-	// unordereddict[key] = value
 	metric := generateCounterMetric(&config.Ts)
+
+	arr := generateMatrix(config.Ts.Labels)
+
+	for i := range arr {
+		fmt.Println(arr[i])
+	}
+
+	os.Exit(0)
 
 	http.Handle("/metrics", promhttp.Handler())
 	go func() {
@@ -112,8 +107,17 @@ func mutate(wg *sync.WaitGroup, metric *prometheus.CounterVec, label cfg.Label, 
 	wg.Done()
 }
 
-func generateMatrix([]cfg.Label) [][]string {
+func generateMatrix(labels []cfg.Label) [][]string {
+	var (
+		tags = make([]string, len(labels))
+		some [][]string
+	)
 
+	for i := range tags {
+		tags[i] = labels[i].Values[0]
+	}
 
-	return nil
+	some = append(some, tags)
+
+	return some
 }
