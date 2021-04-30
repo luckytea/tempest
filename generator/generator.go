@@ -1,23 +1,42 @@
 package generator
 
 import (
-	"github.com/prometheus/client_golang/prometheus"
+	"fmt"
+
+	"github.com/prometheus/prometheus/pkg/labels"
 )
 
-func GenerateMetric(metric Timeseries) (interface{}, error) {
+func EmitOpenMetrics(metric Timeseries) (string, error) {
 	switch metric.MetricType {
 	case CounterType:
-		return prometheus.CounterVec{}, nil
-	default:
-		return nil, ErrUnsupportedMetricType
-	}
-}
-
-func EmitOpenMetrics(metric interface{}) (string, error) {
-	switch metric.(type) {
-	case prometheus.CounterVec:
-		return "success", nil
+		f := fmt.Sprintf("%#v", labels.FromStrings("__name__", "name_here", "code", "400"))
+		return f, nil
 	default:
 		return "", ErrUnsupportedMetricType
 	}
+}
+
+const (
+	helpTemplate   string = "# HELP %s The total number of HTTP requests.\n"
+	typeTemplate   string = "# TYPE %s %s\n"
+	eofTemplate    string = "# EOF\n"
+	metricTemplate string = `%s{%s="%s"} %v %v`
+)
+
+func OpenMetricsLine(metric Timeseries) string {
+	line := fmt.Sprintf(helpTemplate, metric.Name)
+
+	x := fmt.Sprintf(typeTemplate, metric.Name, metric.MetricType)
+
+	line += x
+
+	for i := range metric.Samples {
+		x := fmt.Sprintf(metricTemplate, metric.Name, "label_key", "label_value", metric.Samples[i].Value, metric.Samples[i].Timestamp)
+		line += x
+	}
+
+	line = fmt.Sprintf("%s%s", line,
+		eofTemplate)
+
+	return line
 }

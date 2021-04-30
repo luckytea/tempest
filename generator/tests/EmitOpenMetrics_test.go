@@ -4,23 +4,30 @@ import (
 	"testing"
 
 	"github.com/luckytea/tempest/generator"
-	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/assert"
 )
 
-// Test_simple_metrics_built_successfuly
+// TestEmpitUpenMetricsShouldReturnSuccess
 // генерируем простую метрику в формате промифиуса и валидируем в формате open metrics.
 func TestEmpitUpenMetricsShouldReturnSuccess(t *testing.T) {
 	// arrange
 	var (
 		expectedResult string = "success"
-		expectedError  error  = nil
 
-		dummy prometheus.CounterVec
+		metric = generator.Timeseries{
+			MetricType: "counter",
+			Name:       "some_metrics",
+			Samples: []generator.BackfillSample{
+				{Value: 1, Timestamp: 2, Labels: nil},
+				{Value: 3, Timestamp: 4, Labels: nil},
+			},
+		}
+
+		// input prometheus.CounterVec
 	)
 
 	// act
-	var result, err = generator.EmitOpenMetrics(dummy)
+	var result = generator.OpenMetricsLine(metric)
 
 	// assert
 	t.Run("simple metrics: success", func(t *testing.T) {
@@ -28,38 +35,33 @@ func TestEmpitUpenMetricsShouldReturnSuccess(t *testing.T) {
 			expectedResult,
 			result,
 		)
-
-		assert.Equal(t,
-			expectedError,
-			err,
-		)
 	})
 }
 
-// Test_simple_metrics_built_error_unsupported_type
+// TestEmitOpenMetricsShouldFailWithUnsupportedMetricType
 // передан неподдерживаемый формат метрики.
-func TestEmitOpenMetricsShouldFailWithUnsupportedMetricType(t *testing.T) {
-	// arrange
-	var (
-		expectedResult string = ""
-		expectedError  error  = generator.ErrUnsupportedMetricType
+// func TestEmitOpenMetricsShouldFailWithUnsupportedMetricType(t *testing.T) {
+// 	// arrange
+// 	var (
+// 		expectedResult string = ""
+// 		expectedError  error  = generator.ErrUnsupportedMetricType
 
-		dummy = "invalid metric type placeholder"
-	)
+// 		input = "invalid metric type placeholder"
+// 	)
 
-	// act
-	var result, err = generator.EmitOpenMetrics(dummy)
+// 	// act
+// 	var result, err = generator.EmitOpenMetrics(input)
 
-	// assert
-	t.Run("simple metrics: success", func(t *testing.T) {
-		assert.Equal(t,
-			expectedResult,
-			result,
-		)
+// 	// assert
+// 	t.Run("simple metrics: success", func(t *testing.T) {
+// 		assert.Equal(t,
+// 			expectedResult,
+// 			result,
+// 		)
 
-		assert.Equal(t,
-			expectedError,
-			err,
-		)
-	})
-}
+// 		assert.Equal(t,
+// 			expectedError,
+// 			err,
+// 		)
+// 	})
+// }

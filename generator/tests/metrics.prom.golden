@@ -1,0 +1,6 @@
+# HELP some_metrics The total number of HTTP requests.
+# TYPE some_metrics counter
+some_metrics{label_key="label_value"} 1 2
+some_metrics{label_key="label_value"} 3 4
+# EOF
+a

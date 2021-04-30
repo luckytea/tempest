@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"sync"
 
 	"github.com/luckytea/tempest/cfg"
 
@@ -70,11 +69,6 @@ func generateCounterMetric(t *cfg.Timeseries) *prometheus.CounterVec {
 	prometheus.MustRegister(metric)
 
 	return metric
-}
-
-func mutate(wg *sync.WaitGroup, metric *prometheus.CounterVec, label cfg.Label, i int) {
-	metric.WithLabelValues(label.Values[i], label.Values[i]).Inc()
-	wg.Done()
 }
 
 func generateMatrix(labels []cfg.Label) [][]string {
