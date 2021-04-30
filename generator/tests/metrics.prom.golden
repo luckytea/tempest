@@ -3,4 +3,3 @@
 some_metrics{label_key="label_value"} 1 2
 some_metrics{label_key="label_value"} 3 4
 # EOF
-a
