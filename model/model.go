@@ -12,11 +12,6 @@ type Config struct {
 
 type Timeseries struct {
 	Name       string
-	Labels     []Label
+	Labels     map[string]string
 	MetricType string
-}
-
-type Label struct {
-	Name   string
-	Values []string
 }

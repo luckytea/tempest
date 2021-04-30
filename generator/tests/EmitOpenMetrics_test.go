@@ -10,7 +10,7 @@ import (
 
 // Test_simple_metrics_built_successfuly
 // генерируем простую метрику в формате промифиуса и валидируем в формате open metrics.
-func Test_simple_metrics_built_successfuly(t *testing.T) {
+func TestEmpitUpenMetricsShouldReturnSuccess(t *testing.T) {
 	// arrange
 	var (
 		expectedResult string = "success"
@@ -38,7 +38,7 @@ func Test_simple_metrics_built_successfuly(t *testing.T) {
 
 // Test_simple_metrics_built_error_unsupported_type
 // передан неподдерживаемый формат метрики.
-func Test_openmetrics_generated_invalid(t *testing.T) {
+func TestEmitOpenMetricsShouldFailWithUnsupportedMetricType(t *testing.T) {
 	// arrange
 	var (
 		expectedResult string = ""
