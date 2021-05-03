@@ -1,5 +1,5 @@
 package model
 
-type Config struct {
-	Version string
-}
+import "errors"
+
+var ErrUnsupportedMetricType = errors.New("metric type unsupported")
