@@ -1,3 +1,4 @@
+// Package cfg contains the main configuration of the application.
 package cfg
 
 import (

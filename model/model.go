@@ -1,3 +1,4 @@
+// Package model contains common structures and constants.
 package model
 
 import "errors"

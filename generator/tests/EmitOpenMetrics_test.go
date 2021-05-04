@@ -3,7 +3,7 @@ package generator_test
 import (
 	"testing"
 
-	"github.com/luckytea/tempest/generator"
+	"github.com/LuckyTea/tempest/generator"
 	"github.com/stretchr/testify/assert"
 )
 

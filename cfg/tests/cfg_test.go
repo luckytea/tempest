@@ -11,13 +11,13 @@ import (
 func TestConfig_Validate_Successful(t *testing.T) {
 	t.Run("Config.Validate: Successful", func(t *testing.T) {
 		// arrange
-		cfg := &cfg.Config{
+		config := &cfg.Config{
 			Name: "test_metric",
 			Type: "counter",
 		}
 
 		// act
-		_, err := cfg.Validate()
+		_, err := config.Validate()
 
 		// assert
 		require.NoError(t, err)
@@ -27,13 +27,13 @@ func TestConfig_Validate_Successful(t *testing.T) {
 func TestConfig_Validate_UnsupportedMetricType(t *testing.T) {
 	t.Run("Config.Validate: Unsupported Metric Type", func(t *testing.T) {
 		// arrange
-		cfg := &cfg.Config{
+		config := &cfg.Config{
 			Name: "test_metric",
 			Type: "gauge",
 		}
 
 		// act
-		_, err := cfg.Validate()
+		_, err := config.Validate()
 
 		// assert
 		require.Equal(t,

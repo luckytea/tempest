@@ -19,3 +19,10 @@ type BackfillSample struct {
 	Value     float64
 	Labels    map[string]string
 }
+
+const (
+	helpTemplate   string = "# HELP %s The total number of HTTP requests.\n"
+	typeTemplate   string = "# TYPE %s %s\n"
+	eofTemplate    string = "# EOF\n"
+	metricTemplate string = `%s{%s="%s"} %v %v`
+)

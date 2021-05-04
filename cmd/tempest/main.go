@@ -7,8 +7,6 @@ import (
 	"github.com/LuckyTea/tempest/cfg"
 )
 
-var version = "dev"
-
 func main() {
 	_, err := cfg.Init().Validate()
 	if err != nil {

@@ -20,7 +20,6 @@ linters:
     - goimports
     - golint
     - gomnd
-    - maligned
     - misspell
     - nakedret
     - prealloc
@@ -29,7 +28,6 @@ linters:
     - unused
     - wsl
     - staticcheck
-    - interfacer
     - stylecheck
     - bodyclose
     - gosec
@@ -101,9 +99,6 @@ linters-settings:
     line-length: 120
     # tab width in spaces. Default to 1.
     tab-width: 1
-  maligned:
-    # print struct with more effective memory layout or not, false by default
-    suggest-new: true
   misspell:
     # Correct spellings using locale preferences for US or UK.
     # Default is to use a neutral variety of English.

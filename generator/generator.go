@@ -1,3 +1,4 @@
+// Package generator contains methods for generating metrics.
 package generator
 
 import (
@@ -16,13 +17,6 @@ func EmitOpenMetrics(metric Timeseries) (string, error) {
 	}
 }
 
-const (
-	helpTemplate   string = "# HELP %s The total number of HTTP requests.\n"
-	typeTemplate   string = "# TYPE %s %s\n"
-	eofTemplate    string = "# EOF\n"
-	metricTemplate string = `%s{%s="%s"} %v %v`
-)
-
 func OpenMetricsLine(metric Timeseries) string {
 	line := fmt.Sprintf(helpTemplate, metric.Name)
 
@@ -31,7 +25,8 @@ func OpenMetricsLine(metric Timeseries) string {
 	line += x
 
 	for i := range metric.Samples {
-		x := fmt.Sprintf(metricTemplate, metric.Name, "label_key", "label_value", metric.Samples[i].Value, metric.Samples[i].Timestamp)
+		x := fmt.Sprintf(metricTemplate, metric.Name, "label_key", "label_value",
+			metric.Samples[i].Value, metric.Samples[i].Timestamp)
 		line += x
 	}
 
