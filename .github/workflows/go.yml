@@ -15,7 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Run tests
-      run: go test -v -covermode=count -race ./...
+      run: go test -v -covermode=atomic -race ./...
 
   build:
     runs-on: ubuntu-latest
