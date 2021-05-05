@@ -4,6 +4,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,5 +25,7 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: 1.16
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Build
-      run: go build -v -o tempest
+      run: go build -v -o tempest cmd/tempest/main.go
