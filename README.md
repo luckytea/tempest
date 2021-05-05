@@ -1,5 +1,6 @@
 # tempest
 
-Supreme prometheus metrics backfiller.
+[![Go Reference](https://pkg.go.dev/badge/LuckyTea/tempest.svg)](https://pkg.go.dev/github.com/luckytea/tempest)
+[![Go](https://github.com/LuckyTea/tempest/actions/workflows/go.yml/badge.svg)](https://github.com/LuckyTea/tempest/actions/workflows/go.yml)
 
-[![GoDoc](https://godoc.org/github.com/LuckyTea/tempest?status.svg)](https://godoc.org/github.com/LuckyTea/tempest)
+Supreme prometheus metrics backfiller.
