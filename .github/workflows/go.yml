@@ -25,4 +25,4 @@ jobs:
       with:
         go-version: 1.16
     - name: Build
-      run: go build -v  -o tempest cmd/tempest/main.go
+      run: go build -v -o tempest

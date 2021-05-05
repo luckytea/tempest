@@ -1,9 +1,7 @@
 // Package generator contains methods for generating metrics.
 package generator
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func OpenMetricsLine(metric Timeseries) string {
 	line := fmt.Sprintf(helpTemplate, metric.Name)
