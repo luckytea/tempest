@@ -28,4 +28,4 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build
-      run: go build -v -o tempest cmd/tempest/main.go
+      run: go build -v ./...
