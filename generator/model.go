@@ -9,6 +9,7 @@ const CounterType = "counter"
 type Timeseries struct {
 	MetricType string
 	Name       string
+	Desc       string
 	Samples    []BackfillSample
 }
 
@@ -19,7 +20,7 @@ type BackfillSample struct {
 }
 
 const (
-	helpTemplate   string = "# HELP %s The total number of HTTP requests.\n"
+	helpTemplate   string = "# HELP %s %s\n"
 	typeTemplate   string = "# TYPE %s %s\n"
 	eofTemplate    string = "# EOF\n"
 	metricTemplate string = `%s{%s="%s"} %v %v`

@@ -4,11 +4,9 @@ package generator
 import "fmt"
 
 func OpenMetricsLine(metric Timeseries) string {
-	line := fmt.Sprintf(helpTemplate, metric.Name)
+	var header = generateHeader(metric)
 
-	x := fmt.Sprintf(typeTemplate, metric.Name, metric.MetricType)
-
-	line += x
+	line := header
 
 	for i := range metric.Samples {
 		x := fmt.Sprintf(metricTemplate, metric.Name, "label_key", "label_value",
@@ -20,4 +18,12 @@ func OpenMetricsLine(metric Timeseries) string {
 		eofTemplate)
 
 	return line
+}
+
+func generateHeader(metric Timeseries) string {
+	var header = fmt.Sprintf(helpTemplate, metric.Name, metric.Desc)
+
+	header += fmt.Sprintf(typeTemplate, metric.Name, metric.MetricType)
+
+	return header
 }

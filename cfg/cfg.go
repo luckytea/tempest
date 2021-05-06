@@ -25,7 +25,7 @@ func Init() *Config {
 	flag.StringVar(
 		&cfg.Type,
 		"type", "",
-		"Metric type (counter).",
+		"Metric type [counter].",
 	)
 
 	flag.Parse()
