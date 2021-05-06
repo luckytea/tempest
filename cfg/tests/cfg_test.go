@@ -13,8 +13,12 @@ func TestConfig_Validate_Successful(t *testing.T) {
 	t.Run("Config.Validate: Successful", func(t *testing.T) {
 		// arrange
 		config := &cfg.Config{
-			Name: "test_metric",
-			Type: "counter",
+			Type:  "counter",
+			Name:  "test_metric",
+			Desc:  "test_desc",
+			Label: "name,value,3",
+			From:  500,
+			To:    600,
 		}
 
 		// act
@@ -39,6 +43,27 @@ func TestConfig_Validate_UnsupportedMetricType(t *testing.T) {
 		// assert
 		require.Equal(t,
 			model.ErrUnsupportedMetricType,
+			err,
+		)
+	})
+}
+
+func TestConfig_Validate_MalformedTime(t *testing.T) {
+	t.Run("Config.Validate: malformed time configuration", func(t *testing.T) {
+		// arrange
+		config := &cfg.Config{
+			Type: "counter",
+			Name: "test_metric",
+			From: 600,
+			To:   500,
+		}
+
+		// act
+		_, err := config.Validate()
+
+		// assert
+		require.Equal(t,
+			cfg.ErrMalformedTime,
 			err,
 		)
 	})

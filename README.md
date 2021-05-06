@@ -5,7 +5,7 @@ Supreme prometheus metrics backfiller.
 ## Run
 
 ```sh
-tempest -type=counter -name=metric_name -desc=metric_desc
+tempest -type=counter -name=http_requests_total -desc="Total requests" -label=code,200,3 -from=1620388800 -to=1620388900
 ```
 
 ## Supported metric types
@@ -14,8 +14,11 @@ tempest -type=counter -name=metric_name -desc=metric_desc
 
 ## Parameters
 
-| Command line | Default | Description |
-|--------------|---------|-------------|
-| name         |         | The desired name for the metric. |
-| desc         |         | Metric description. |
-| type         |         | Metric type.        |
+| Command line | Default | Description                            |
+|--------------|---------|----------------------------------------|
+| name         |         | The desired name for the metric        |
+| desc         |         | Metric description                     |
+| type         |         | Metric type                            |
+| label        |         | Label type string [name,value,counter] |
+| from         |         | Time start                             |
+| to           |         | Time end                               |

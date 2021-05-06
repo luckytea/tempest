@@ -9,7 +9,8 @@ func OpenMetricsLine(metric Timeseries) string {
 	line := header
 
 	for i := range metric.Samples {
-		x := fmt.Sprintf(metricTemplate, metric.Name, "label_key", "label_value",
+		x := fmt.Sprintf(metricTemplate,
+			metric.Name, metric.Samples[i].LabelName, metric.Samples[i].LabelValue,
 			metric.Samples[i].Value, metric.Samples[i].Timestamp)
 		line += x
 	}

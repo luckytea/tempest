@@ -11,6 +11,12 @@ func Init() *Config {
 	cfg := &Config{}
 
 	flag.StringVar(
+		&cfg.Type,
+		"type", "",
+		"Metric type [counter].",
+	)
+
+	flag.StringVar(
 		&cfg.Name,
 		"name", "",
 		"The desired name for the metric.",
@@ -23,9 +29,21 @@ func Init() *Config {
 	)
 
 	flag.StringVar(
-		&cfg.Type,
-		"type", "",
-		"Metric type [counter].",
+		&cfg.Label,
+		"label", "",
+		"Metric label, format: name,value,count",
+	)
+
+	flag.Int64Var(
+		&cfg.From,
+		"from", 0,
+		"Metric sample from unixtime.",
+	)
+
+	flag.Int64Var(
+		&cfg.To,
+		"to", 0,
+		"Metric sample to unixtime.",
 	)
 
 	flag.Parse()
@@ -38,6 +56,10 @@ func (c *Config) Validate() (*Config, error) {
 	case "counter":
 	default:
 		return nil, model.ErrUnsupportedMetricType
+	}
+
+	if c.From >= c.To {
+		return nil, ErrMalformedTime
 	}
 
 	return c, nil
