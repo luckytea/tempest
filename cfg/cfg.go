@@ -4,7 +4,7 @@ package cfg
 import (
 	"flag"
 
-	"github.com/LuckyTea/tempest/model"
+	"github.com/luckytea/tempest/model"
 )
 
 func Init() *Config {

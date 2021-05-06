@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/LuckyTea/tempest/cfg"
-	"github.com/LuckyTea/tempest/generator"
+	"github.com/luckytea/tempest/cfg"
+	"github.com/luckytea/tempest/generator"
 )
 
 func main() {

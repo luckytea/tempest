@@ -3,8 +3,9 @@ package cfg_test
 import (
 	"testing"
 
-	"github.com/LuckyTea/tempest/cfg"
-	"github.com/LuckyTea/tempest/model"
+	"github.com/luckytea/tempest/cfg"
+	"github.com/luckytea/tempest/model"
+
 	"github.com/stretchr/testify/require"
 )
 
