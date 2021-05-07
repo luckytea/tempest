@@ -1,6 +1,9 @@
 package generator
 
-import "errors"
+import (
+	"errors"
+	"math/rand"
+)
 
 var (
 	ErrUnsupportedMetricType = errors.New("metric type unsupported")
@@ -8,6 +11,10 @@ var (
 )
 
 const CounterType = "counter"
+
+type Provider struct {
+	RandSource *rand.Rand
+}
 
 type Timeseries struct {
 	MetricType string

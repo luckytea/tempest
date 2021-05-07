@@ -1,4 +1,3 @@
-// Package generator contains methods for generating metrics.
 package generator
 
 import "fmt"
@@ -15,8 +14,7 @@ func OpenMetricsLine(metric Timeseries) string {
 		line += x
 	}
 
-	line = fmt.Sprintf("%s%s", line,
-		eofTemplate)
+	line = fmt.Sprintf("%s%s", line, eofTemplate)
 
 	return line
 }

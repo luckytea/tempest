@@ -1,43 +1,47 @@
 package generator
 
 import (
-	"math/rand"
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
-func GenerateSamplesFromString(labels string, from, to int64) ([]BackfillSample, error) {
+func (p *Provider) GenerateSamplesFromString(labelsString string, from, to int64) ([]BackfillSample, error) {
 	var samples []BackfillSample
 
-	rand.Seed(time.Now().Unix())
+	labels := strings.Split(labelsString, ";")
 
-	tmp := strings.Split(labels, ",")
+	for _, label := range labels {
+		tmp := strings.Split(label, ",")
 
-	if len(tmp)%3 != 0 {
-		return nil, ErrMalformed
-	}
-
-	count, err := strconv.Atoi(tmp[2])
-	if err != nil {
-		return nil, ErrMalformed
-	}
-
-	for ii := 0; ii < count; ii++ {
-		var bs = BackfillSample{
-			LabelName:  tmp[0],
-			LabelValue: tmp[1],
-			Timestamp:  rand.Int63n(to-from) + from, // nolint: gosec // not used for security purposes.
+		if len(tmp)%3 != 0 {
+			return nil, ErrMalformed
 		}
 
-		samples = append(samples, bs)
+		count, err := strconv.Atoi(tmp[2])
+		if err != nil {
+			return nil, ErrMalformed
+		}
+
+		for ii := 0; ii < count; ii++ {
+			var bs = BackfillSample{
+				LabelName:  tmp[0],
+				LabelValue: tmp[1],
+				Timestamp:  p.RandSource.Int63n(to-from) + from,
+			}
+
+			samples = append(samples, bs)
+		}
 	}
 
 	sort.Sort(TimestampSorter(samples))
 
+	m := make(map[string]float64)
+
 	for ii := range samples {
-		samples[ii].Value = float64(ii) + 1
+		m[samples[ii].LabelValue]++
+
+		samples[ii].Value = m[samples[ii].LabelValue]
 	}
 
 	return samples, nil

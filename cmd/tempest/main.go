@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/luckytea/tempest/cfg"
 	"github.com/luckytea/tempest/generator"
@@ -16,7 +17,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	samples, err := generator.GenerateSamplesFromString(config.Label, config.From, config.To)
+	generatorProvider := generator.New(time.Now().Unix())
+
+	samples, err := generatorProvider.GenerateSamplesFromString(config.Label, config.From, config.To)
 	if err != nil {
 		log.Println("can't generate labels:", err)
 		os.Exit(1)
